@@ -1,2 +1,2 @@
 # ToDo-List
-Exemplo de criação de várias ToDo Lists, com adição de vários itens a cada lista.
+Java Desktop example for creating various to-do lists, and adding several items to each list.
