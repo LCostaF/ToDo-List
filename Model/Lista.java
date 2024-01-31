@@ -18,6 +18,15 @@ public class Lista {
         
     }
     
+    public Lista(String nomeLista) {
+        this.nomeLista = nomeLista;
+    }
+    
+    public Lista(int idLista, String nomeLista) {
+        this.idLista = idLista;
+        this.nomeLista = nomeLista;
+    }
+    
     // Métodos Getters
     public int getIdLista() {
         return idLista;

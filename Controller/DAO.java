@@ -34,15 +34,7 @@ public class DAO {
             JDBCUtil.init(config_file);
             connection = JDBCUtil.getConnection();
             connection.setAutoCommit(false);//configuracao necessaria para confirmacao ou nao de alteracoes no banco de dados.
-
             DatabaseMetaData dbmt = connection.getMetaData();
-            System.out.println("Nome do BD: " + dbmt.getDatabaseProductName());
-            System.out.println("Versao do BD: " + dbmt.getDatabaseProductVersion());
-            System.out.println("URL: " + dbmt.getURL());
-            System.out.println("Driver: " + dbmt.getDriverName());
-            System.out.println("Versao Driver: " + dbmt.getDriverVersion());
-            System.out.println("Usuario: " + dbmt.getUserName());
-
             return true;
         } catch (ClassNotFoundException erro) {
             System.out.println("Falha ao carregar o driver JDBC." + erro);
@@ -99,7 +91,7 @@ public class DAO {
                 int tipo = ResultSet.TYPE_SCROLL_SENSITIVE;
                 int concorrencia = ResultSet.CONCUR_UPDATABLE;
                 pstdados = connection.prepareStatement(JDBCUtil.getConsultaEspecifica(), tipo, concorrencia);
-                pstdados.setInt(1, lista.getIdLista());
+                pstdados.setString(1, "%" + lista.getNomeLista() + "%");
             // Items
             } else {
                 Item item = (Item) objeto;
@@ -107,7 +99,7 @@ public class DAO {
                 int tipo = ResultSet.TYPE_SCROLL_SENSITIVE;
                 int concorrencia = ResultSet.CONCUR_UPDATABLE;
                 pstdados = connection.prepareStatement(JDBCUtil.getConsultaEspecifica(), tipo, concorrencia);
-                pstdados.setInt(1, item.getIdItem());
+                pstdados.setString(1, "%" + item.getDescItem() + "%");
             }
             rsdados = pstdados.executeQuery();
             return true;
@@ -141,6 +133,7 @@ public class DAO {
                 int concorrencia = ResultSet.CONCUR_UPDATABLE;
                 pstdados = connection.prepareStatement(JDBCUtil.getInserir(), tipo, concorrencia);
                 pstdados.setString(1, item.getDescItem());
+                pstdados.setInt(2, item.getIdItem());
             }
             int i = pstdados.executeUpdate();
             if(i == 1) {

@@ -18,6 +18,15 @@ public class Item {
         
     }
     
+    public Item(String descItem) {
+        this.descItem = descItem;
+    }
+    
+    public Item(int idItem, String descItem) {
+        this.idItem = idItem;
+        this.descItem = descItem;
+    }
+    
     // Métodos Getters
     public int getIdItem() {
         return idItem;
