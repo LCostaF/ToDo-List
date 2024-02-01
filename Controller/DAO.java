@@ -80,27 +80,36 @@ public class DAO {
         return false;
     }
     
-    // Método para buscar por membros específicos de uma tabela
-    public boolean consultarEspecifico(Object objeto) {
-        String classe = objeto.getClass().getSimpleName();
+    // Métodos para buscar por membros específicos de uma tabela
+    // Listas
+    public boolean consultarEspecificoLista(Lista lista) {
         try {
-            // Listas
-            if(classe.equals("Lista")) {
-                Lista lista = (Lista) objeto;
-                JDBCUtil.initEntidade(prop_lista.getAbsolutePath());
-                int tipo = ResultSet.TYPE_SCROLL_SENSITIVE;
-                int concorrencia = ResultSet.CONCUR_UPDATABLE;
-                pstdados = connection.prepareStatement(JDBCUtil.getConsultaEspecifica(), tipo, concorrencia);
-                pstdados.setString(1, "%" + lista.getNomeLista() + "%");
-            // Items
-            } else {
-                Item item = (Item) objeto;
-                JDBCUtil.initEntidade(prop_item.getAbsolutePath());
-                int tipo = ResultSet.TYPE_SCROLL_SENSITIVE;
-                int concorrencia = ResultSet.CONCUR_UPDATABLE;
-                pstdados = connection.prepareStatement(JDBCUtil.getConsultaEspecifica(), tipo, concorrencia);
-                pstdados.setString(1, "%" + item.getDescItem() + "%");
-            }
+            JDBCUtil.initEntidade(prop_lista.getAbsolutePath());
+            int tipo = ResultSet.TYPE_SCROLL_SENSITIVE;
+            int concorrencia = ResultSet.CONCUR_UPDATABLE;
+            pstdados = connection.prepareStatement(JDBCUtil.getConsultaEspecifica(), tipo, concorrencia);
+            pstdados.setString(1, "%" + lista.getNomeLista() + "%");            
+            rsdados = pstdados.executeQuery();
+            return true;
+        } catch (ClassNotFoundException erro) {
+            System.out.println("Falha ao carregar o driver JDBC." + erro);
+        } catch (IOException erro) {
+            System.out.println("Falha ao carregar o arquivo de configuração." + erro);
+        } catch (SQLException erro) {
+            System.out.println("Erro ao executar consulta = " + erro);
+        }
+        return false;
+    }
+    
+    // Items
+    public boolean consultarEspecificoItems(String desc, int lista_id) {
+        try {
+            JDBCUtil.initEntidade(prop_item.getAbsolutePath());
+            int tipo = ResultSet.TYPE_SCROLL_SENSITIVE;
+            int concorrencia = ResultSet.CONCUR_UPDATABLE;
+            pstdados = connection.prepareStatement(JDBCUtil.getConsultaEspecifica(), tipo, concorrencia);
+            pstdados.setInt(1, lista_id);
+            pstdados.setString(2, "%" + desc + "%");
             rsdados = pstdados.executeQuery();
             return true;
         } catch (ClassNotFoundException erro) {
@@ -188,6 +197,30 @@ public class DAO {
         return false;
     }
     
+    public boolean mudarStatus(int id, boolean status) {
+        try {
+            JDBCUtil.initEntidade(prop_item.getAbsolutePath());
+            int tipo = ResultSet.TYPE_SCROLL_SENSITIVE;
+            int concorrencia = ResultSet.CONCUR_UPDATABLE;
+            pstdados = connection.prepareCall(JDBCUtil.getMudarStatus(), tipo, concorrencia);
+            pstdados.setBoolean(1, status);
+            pstdados.setInt(2, id);
+            int i = pstdados.executeUpdate();
+            if(i == 1) {
+                connection.commit();
+                return true;
+            }
+        } catch (ClassNotFoundException erro) {
+            System.out.println("Falha ao carregar o driver JDBC." + erro);
+        } catch (IOException erro) {
+            System.out.println("Falha ao carregar o arquivo de configuração." + erro);
+        } catch (SQLException erro) {
+            System.out.println("Erro ao executar consulta = " + erro);
+        }
+        return false;
+        
+    }
+            
     // Método para excluir um registro
     public boolean excluir(int id, File opcao) {
         try {

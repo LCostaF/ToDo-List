@@ -27,6 +27,7 @@ public class JDBCUtil {
     private static String inserir;
     private static String alterar;
     private static String excluir;
+    private static String mudarStatus;
 
     /**
      * Initializes the data source.
@@ -71,6 +72,7 @@ public class JDBCUtil {
         inserir = props.getProperty("sqlInserir");
         alterar = props.getProperty("sqlAlterar");
         excluir = props.getProperty("sqlExcluir");
+        mudarStatus = props.getProperty("sqlMudarStatus");
         
     }
     
@@ -163,5 +165,9 @@ public class JDBCUtil {
     
     public static String getExcluir() {
         return excluir;
+    }
+    
+    public static String getMudarStatus() {
+        return mudarStatus;
     }
 }

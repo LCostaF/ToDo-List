@@ -9,9 +9,13 @@ import Controller.JDBCUtil;
 import Model.Item;
 import Model.Lista;
 import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
+import java.sql.Types;
+import java.util.Vector;
 import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -38,10 +42,6 @@ public class Main extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jScrollPaneListas = new javax.swing.JScrollPane();
-        jListListas = new javax.swing.JList<>();
-        jScrollPaneItems = new javax.swing.JScrollPane();
-        jListItems = new javax.swing.JList<>();
         jLabelListas = new javax.swing.JLabel();
         jLabelItems = new javax.swing.JLabel();
         jButtonCriarLista = new javax.swing.JButton();
@@ -50,10 +50,15 @@ public class Main extends javax.swing.JFrame {
         jButtonCriarItem = new javax.swing.JButton();
         jButtonEditarItem = new javax.swing.JButton();
         jButtonExcluirItem = new javax.swing.JButton();
+        jButtonStatusItem = new javax.swing.JButton();
         jTextFieldLista = new javax.swing.JTextField();
         jTextFieldItem = new javax.swing.JTextField();
         jLabelNomeLista = new javax.swing.JLabel();
         jLabelDescItem = new javax.swing.JLabel();
+        jScrollPaneListas = new javax.swing.JScrollPane();
+        jTableListas = new javax.swing.JTable();
+        jScrollPaneItems = new javax.swing.JScrollPane();
+        jTableItems = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("ToDo List");
@@ -66,12 +71,6 @@ public class Main extends javax.swing.JFrame {
             }
         });
 
-        jListListas.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
-        jScrollPaneListas.setViewportView(jListListas);
-
-        jListItems.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
-        jScrollPaneItems.setViewportView(jListItems);
-
         jLabelListas.setText("Listas");
 
         jLabelItems.setText("Items");
@@ -83,7 +82,7 @@ public class Main extends javax.swing.JFrame {
             }
         });
 
-        jButtonEditarLista.setText("Editar");
+        jButtonEditarLista.setText("Editar Nome");
         jButtonEditarLista.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButtonEditarListaActionPerformed(evt);
@@ -104,7 +103,7 @@ public class Main extends javax.swing.JFrame {
             }
         });
 
-        jButtonEditarItem.setText("Editar");
+        jButtonEditarItem.setText("Editar Descrição");
         jButtonEditarItem.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButtonEditarItemActionPerformed(evt);
@@ -115,6 +114,13 @@ public class Main extends javax.swing.JFrame {
         jButtonExcluirItem.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButtonExcluirItemActionPerformed(evt);
+            }
+        });
+
+        jButtonStatusItem.setText("Alterar Status");
+        jButtonStatusItem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonStatusItemActionPerformed(evt);
             }
         });
 
@@ -134,97 +140,171 @@ public class Main extends javax.swing.JFrame {
 
         jLabelDescItem.setText("Descrição do Item");
 
+        jTableListas.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null},
+                {null, null},
+                {null, null},
+                {null, null}
+            },
+            new String [] {
+                "ID", "Nome"
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.Integer.class, java.lang.String.class
+            };
+            boolean[] canEdit = new boolean [] {
+                false, false
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jTableListas.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                jTableListasMouseReleased(evt);
+            }
+        });
+        jScrollPaneListas.setViewportView(jTableListas);
+        if (jTableListas.getColumnModel().getColumnCount() > 0) {
+            jTableListas.getColumnModel().getColumn(0).setPreferredWidth(40);
+            jTableListas.getColumnModel().getColumn(1).setMinWidth(180);
+            jTableListas.getColumnModel().getColumn(1).setPreferredWidth(180);
+            jTableListas.getColumnModel().getColumn(1).setMaxWidth(180);
+        }
+
+        jTableItems.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null}
+            },
+            new String [] {
+                "ID", "Descrição", "Status"
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.Integer.class, java.lang.String.class, java.lang.String.class
+            };
+            boolean[] canEdit = new boolean [] {
+                false, false, false
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jScrollPaneItems.setViewportView(jTableItems);
+        if (jTableItems.getColumnModel().getColumnCount() > 0) {
+            jTableItems.getColumnModel().getColumn(0).setPreferredWidth(40);
+            jTableItems.getColumnModel().getColumn(1).setMinWidth(180);
+            jTableItems.getColumnModel().getColumn(1).setPreferredWidth(180);
+            jTableItems.getColumnModel().getColumn(1).setMaxWidth(180);
+            jTableItems.getColumnModel().getColumn(2).setMinWidth(60);
+            jTableItems.getColumnModel().getColumn(2).setPreferredWidth(60);
+            jTableItems.getColumnModel().getColumn(2).setMaxWidth(60);
+        }
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                        .addGap(50, 50, 50)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jButtonCriarLista, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(66, 66, 66)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(jButtonExcluirLista)
-                                    .addComponent(jButtonEditarLista, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(148, 148, 148)
+                        .addComponent(jLabelListas))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(65, 65, 65)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jLabelNomeLista)
+                            .addComponent(jTextFieldLista, javax.swing.GroupLayout.DEFAULT_SIZE, 220, Short.MAX_VALUE)
+                            .addComponent(jScrollPaneListas, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(122, 122, 122)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jButtonCriarLista, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jButtonExcluirLista, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jButtonEditarLista, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addGap(92, 92, 92)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jButtonCriarItem, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                        .addGroup(layout.createSequentialGroup()
+                            .addComponent(jButtonExcluirItem, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jButtonStatusItem, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(jButtonEditarItem, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabelDescItem)
+                            .addComponent(jTextFieldItem, javax.swing.GroupLayout.PREFERRED_SIZE, 280, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                 .addGroup(layout.createSequentialGroup()
-                                    .addGap(98, 98, 98)
-                                    .addComponent(jLabelListas))
-                                .addComponent(jScrollPaneListas, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabelNomeLista)
-                            .addComponent(jTextFieldLista, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 100, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(layout.createSequentialGroup()
-                            .addComponent(jButtonCriarItem, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGap(66, 66, 66)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addComponent(jButtonExcluirItem)
-                                .addComponent(jButtonEditarItem, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jScrollPaneItems, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addComponent(jLabelItems)
-                                .addGap(114, 114, 114))))
-                    .addComponent(jTextFieldItem, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabelDescItem))
-                .addGap(51, 51, 51))
+                                    .addGap(116, 116, 116)
+                                    .addComponent(jLabelItems)
+                                    .addGap(135, 135, 135))
+                                .addComponent(jScrollPaneItems, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 280, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                .addContainerGap(64, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(146, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(jLabelListas)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jScrollPaneListas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(jLabelItems)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jScrollPaneItems, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(20, 20, 20)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabelNomeLista)
-                    .addComponent(jLabelDescItem))
+                    .addComponent(jLabelListas)
+                    .addComponent(jLabelItems))
+                .addGap(2, 2, 2)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPaneListas, javax.swing.GroupLayout.PREFERRED_SIZE, 154, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jScrollPaneItems, javax.swing.GroupLayout.PREFERRED_SIZE, 154, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabelDescItem)
+                    .addComponent(jLabelNomeLista))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jTextFieldLista, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jTextFieldItem, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(26, 26, 26)
+                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jButtonCriarLista)
-                            .addComponent(jButtonEditarLista)
-                            .addComponent(jButtonCriarItem))
-                        .addGap(18, 18, 18)
-                        .addComponent(jButtonExcluirLista))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jButtonEditarItem)
-                        .addGap(18, 18, 18)
-                        .addComponent(jButtonExcluirItem)))
-                .addGap(49, 49, 49))
+                    .addComponent(jButtonCriarItem, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jButtonCriarLista)
+                        .addComponent(jButtonEditarItem)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButtonEditarLista)
+                    .addComponent(jButtonExcluirItem)
+                    .addComponent(jButtonStatusItem))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jButtonExcluirLista)
+                .addGap(41, 41, 41))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButtonCriarListaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCriarListaActionPerformed
-        DefaultListModel<String> listas = new DefaultListModel<>();
+        DefaultTableModel listas = (DefaultTableModel)jTableListas.getModel();
+        DefaultTableModel items = (DefaultTableModel)jTableItems.getModel();
         try {
             if(!jTextFieldLista.getText().equals("")) {
                 if(dao.inserir(new Lista(jTextFieldLista.getText()))) {
                     limpaCampoLista();
                     dao.consultarTodos(dao.getPropLista());
                     preencherListas(listas);
+                    items.setRowCount(0);
                     JOptionPane.showMessageDialog(this,
                                 "Nova lista criada com sucesso!",
                                 "Lista criada",
@@ -251,8 +331,9 @@ public class Main extends javax.swing.JFrame {
     }//GEN-LAST:event_jButtonCriarListaActionPerformed
 
     private void jButtonEditarListaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEditarListaActionPerformed
-        DefaultListModel<String> listas = new DefaultListModel<>();
-        if(jListListas.getSelectionModel().isSelectionEmpty()) {
+        DefaultTableModel listas = (DefaultTableModel)jTableListas.getModel();
+        DefaultTableModel items = (DefaultTableModel)jTableItems.getModel();
+        if(jTableListas.getSelectionModel().isSelectionEmpty()) {
             JOptionPane.showMessageDialog(this,
                         "Dados não atualizados: favor selecionar a lista a ser alterada.",
                         "Falha de atualização",
@@ -265,12 +346,12 @@ public class Main extends javax.swing.JFrame {
                 jTextFieldLista.requestFocus();
         } else {
             try {
-                int index = Integer.parseInt(jListListas.getSelectedValue().substring(0, jListListas.getSelectedValue().indexOf(" ")));
-                dao.alterar(new Lista(index, jTextFieldLista.getText()));
-                jListListas.getSelectionModel().clearSelection();
+                dao.alterar(new Lista(Integer.parseInt(jTableListas.getValueAt(jTableListas.getSelectedRow(), 0).toString()), jTextFieldLista.getText()));
+                jTableListas.getSelectionModel().clearSelection();
                 limpaCampoLista();
                 dao.consultarTodos(dao.getPropLista());
                 preencherListas(listas);
+                items.setRowCount(0);
                 JOptionPane.showMessageDialog(this,
                                 "Lista atualizada com sucesso!",
                                 "Atualização concluída",
@@ -285,20 +366,21 @@ public class Main extends javax.swing.JFrame {
     }//GEN-LAST:event_jButtonEditarListaActionPerformed
 
     private void jButtonExcluirListaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonExcluirListaActionPerformed
-        DefaultListModel<String> listas = new DefaultListModel<>();
-        if(jListListas.getSelectionModel().isSelectionEmpty()) {
+        DefaultTableModel listas = (DefaultTableModel)jTableListas.getModel();
+        DefaultTableModel items = (DefaultTableModel)jTableItems.getModel();
+        if(jTableListas.getSelectionModel().isSelectionEmpty()) {
             JOptionPane.showMessageDialog(this,
-                        "Nenhuma lista excluída: favor selecionar a lista a ser alterada.",
+                        "Nenhuma lista excluída: favor selecionar a lista a ser excluída.",
                         "Falha ao excluir",
                         JOptionPane.ERROR_MESSAGE);
         } else {
             try {
-                int index = Integer.parseInt(jListListas.getSelectedValue().substring(0, jListListas.getSelectedValue().indexOf(" ")));
-                dao.excluir(index, dao.getPropLista());
-                jListListas.getSelectionModel().clearSelection();
+                dao.excluir(Integer.parseInt(jTableListas.getValueAt(jTableListas.getSelectedRow(), 0).toString()), dao.getPropLista());
+                jTableListas.getSelectionModel().clearSelection();
                 limpaCampoLista();
                 dao.consultarTodos(dao.getPropLista());
                 preencherListas(listas);
+                items.setRowCount(0);
                 JOptionPane.showMessageDialog(this,
                                 "Lista Excluída com sucesso!",
                                 "Lista Excluída",
@@ -313,16 +395,16 @@ public class Main extends javax.swing.JFrame {
     }//GEN-LAST:event_jButtonExcluirListaActionPerformed
 
     private void jButtonCriarItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCriarItemActionPerformed
-        DefaultListModel<String> items = new DefaultListModel<>();
+        DefaultTableModel items = (DefaultTableModel)jTableItems.getModel();
         try {
-            if(!jListListas.getSelectionModel().isSelectionEmpty()) {
+            if(!jTableListas.getSelectionModel().isSelectionEmpty()) {
                 if(!jTextFieldItem.getText().equals("")) {
                     if(dao.inserir(new Item(
-                            Integer.parseInt(jListListas.getSelectedValue().substring(0, jListListas.getSelectedValue().indexOf(" "))),
+                            Integer.parseInt(jTableListas.getValueAt(jTableListas.getSelectedRow(), 0).toString()),
                             jTextFieldItem.getText()
                     ))) {
                         limpaCampoItem();
-                        dao.consultarTodos(dao.getPropItem());
+                        buscaItemsPorLista();
                         preencherItems(items);
                         JOptionPane.showMessageDialog(this,
                                 "Novo item criado com sucesso!",
@@ -356,29 +438,126 @@ public class Main extends javax.swing.JFrame {
     }//GEN-LAST:event_jButtonCriarItemActionPerformed
 
     private void jButtonEditarItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEditarItemActionPerformed
-        // TODO add your handling code here:
+        DefaultTableModel items = (DefaultTableModel)jTableItems.getModel();
+        if(jTableItems.getSelectionModel().isSelectionEmpty()) {
+            JOptionPane.showMessageDialog(this,
+                        "Dados não atualizados: favor selecionar o item a ser alterado.",
+                        "Falha de atualização",
+                        JOptionPane.ERROR_MESSAGE);
+        } else if(jTextFieldItem.getText().equals("")) {
+            JOptionPane.showMessageDialog(this,
+                        "Item não alterado: o item deve ter uma descrição.",
+                        "Campo não preenchido",
+                        JOptionPane.ERROR_MESSAGE);
+                jTextFieldItem.requestFocus();
+        } else {
+            try {
+                dao.alterar(new Item(Integer.parseInt(jTableItems.getValueAt(jTableItems.getSelectedRow(), 0).toString()), jTextFieldItem.getText()));
+                jTableItems.getSelectionModel().clearSelection();
+                limpaCampoItem();
+                buscaItemsPorLista();
+                preencherItems(items);
+                JOptionPane.showMessageDialog(this,
+                                "Item atualizado com sucesso!",
+                                "Atualização concluída",
+                                JOptionPane.INFORMATION_MESSAGE);
+            } catch(Exception e) {
+                JOptionPane.showMessageDialog(this,
+                "Ocorreu um erro ao tentar alterar o item. Por favor, tente novamente.",
+                "Ocorreu um erro",
+                JOptionPane.ERROR_MESSAGE);
+            }
+        }
     }//GEN-LAST:event_jButtonEditarItemActionPerformed
 
     private void jButtonExcluirItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonExcluirItemActionPerformed
-        // TODO add your handling code here:
+        DefaultTableModel items = (DefaultTableModel)jTableItems.getModel();
+        if(jTableItems.getSelectionModel().isSelectionEmpty()) {
+            JOptionPane.showMessageDialog(this,
+                        "Nenhum item excluído: favor selecionar o item a ser excluído.",
+                        "Falha ao excluir",
+                        JOptionPane.ERROR_MESSAGE);
+        } else {
+            try {
+                dao.excluir(Integer.parseInt(jTableItems.getValueAt(jTableItems.getSelectedRow(), 0).toString()), dao.getPropItem());
+                jTableItems.getSelectionModel().clearSelection();
+                limpaCampoItem();
+                buscaItemsPorLista();
+                preencherItems(items);
+                JOptionPane.showMessageDialog(this,
+                                "Item excluído com sucesso!",
+                                "Item excluído",
+                                JOptionPane.INFORMATION_MESSAGE);
+            } catch(Exception e) {
+                JOptionPane.showMessageDialog(this,
+                            "Ocorreu um erro ao tentar excluir o item. Por favor, tente novamente.",
+                            "Ocorreu um erro",
+                            JOptionPane.ERROR_MESSAGE);
+            }
+        }
     }//GEN-LAST:event_jButtonExcluirItemActionPerformed
 
+    private void jButtonStatusItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonStatusItemActionPerformed
+        DefaultTableModel items = (DefaultTableModel)jTableItems.getModel();
+        if(jTableItems.getSelectionModel().isSelectionEmpty()) {
+            JOptionPane.showMessageDialog(this,
+                        "Status não atualizado: favor selecionar o item a ser alterado.",
+                        "Falha de atualização",
+                        JOptionPane.ERROR_MESSAGE);
+        } else {
+            try {
+                boolean novoStatus = false;
+                if (jTableItems.getValueAt(jTableItems.getSelectedRow(), 2).toString().equals("Pendente")) {
+                    novoStatus = true;
+                }
+                dao.mudarStatus(Integer.parseInt(jTableItems.getValueAt(jTableItems.getSelectedRow(), 0).toString()), novoStatus);
+                jTableItems.getSelectionModel().clearSelection();
+                limpaCampoItem();
+                buscaItemsPorLista();
+                preencherItems(items);
+                JOptionPane.showMessageDialog(this,
+                                "Item atualizado com sucesso!",
+                                "Atualização concluída",
+                                JOptionPane.INFORMATION_MESSAGE);
+            } catch(Exception e) {
+                JOptionPane.showMessageDialog(this,
+                "Ocorreu um erro ao tentar alterar o item. Por favor, tente novamente.",
+                "Ocorreu um erro",
+                JOptionPane.ERROR_MESSAGE);
+            }
+        }
+    }//GEN-LAST:event_jButtonStatusItemActionPerformed
+
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
-        DefaultListModel<String> listas = new DefaultListModel<>();
+        DefaultTableModel listas = (DefaultTableModel)jTableListas.getModel();
         dao.consultarTodos(dao.getPropLista());
         preencherListas(listas);
     }//GEN-LAST:event_formWindowOpened
 
     private void jTextFieldListaKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextFieldListaKeyReleased
-        if(jListListas.getSelectionModel().isSelectionEmpty() && dao.consultarEspecifico(new Lista(jTextFieldLista.getText()))) {
-            DefaultListModel<String> listas = new DefaultListModel<>();
+        if(jTableListas.getSelectionModel().isSelectionEmpty() && dao.consultarEspecificoLista(new Lista(jTextFieldLista.getText()))) {
+            DefaultTableModel listas = (DefaultTableModel)jTableListas.getModel();
             preencherListas(listas);
         }
     }//GEN-LAST:event_jTextFieldListaKeyReleased
 
     private void jTextFieldItemKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextFieldItemKeyReleased
-        // TODO add your handling code here:
+        if(!jTableListas.getSelectionModel().isSelectionEmpty() && jTableItems.getSelectionModel().isSelectionEmpty() 
+                && dao.consultarEspecificoItems(jTextFieldItem.getText(), 
+                        Integer.parseInt(jTableListas.getValueAt(jTableListas.getSelectedRow(), 0).toString()))) {
+            DefaultTableModel items = (DefaultTableModel)jTableItems.getModel();
+            preencherItems(items);
+        }
     }//GEN-LAST:event_jTextFieldItemKeyReleased
+
+    private void jTableListasMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableListasMouseReleased
+        if(dao.consultarEspecificoItems(jTextFieldItem.getText(), 
+                        Integer.parseInt(jTableListas.getValueAt(jTableListas.getSelectedRow(), 0).toString()))) {
+            DefaultTableModel items = (DefaultTableModel)jTableItems.getModel();
+            preencherItems(items);
+        }
+        
+    }//GEN-LAST:event_jTableListasMouseReleased
 
     // Métodos para limpar os campos de entrada de texto
     private void limpaCampoLista() {
@@ -389,15 +568,29 @@ public class Main extends javax.swing.JFrame {
         jTextFieldItem.setText("");
     }
     
-    private void preencherListas(DefaultListModel<String> modelo) {
+    private void buscaItemsPorLista() {
+        dao.consultarEspecificoItems(jTextFieldItem.getText(), 
+                        Integer.parseInt(jTableListas.getValueAt(jTableListas.getSelectedRow(), 0).toString()));
+    }
+    
+    private void preencherListas(DefaultTableModel modelo) {
         try {
             ResultSet rs = dao.getResultSet();
-            DefaultListModel<String> lista = modelo;
-            lista.removeAllElements();
+            DefaultTableModel lista = modelo;
+            lista.setRowCount(0);
             while(rs != null && rs.next()) {
-                lista.addElement(rs.getInt(1) + " - " + rs.getString(2));
+                ResultSetMetaData rsmd = rs.getMetaData();
+                Vector v = new Vector();
+                for (int i = 1; i <= rsmd.getColumnCount(); i++) {
+                    if (rsmd.getColumnType(i) == Types.VARCHAR
+                            || rsmd.getColumnClassName(i).equalsIgnoreCase("java.lang.String")) {//para string
+                        v.addElement(rs.getString(i));
+                    } else if (rsmd.getColumnType(i) == Types.INTEGER) {//para inteiros
+                        v.addElement(new Long(rs.getLong(i)));
+                    }
+                }
+                lista.addRow(v);
             }
-            jListListas.setModel(modelo);
         } catch(SQLException e) {
             JOptionPane.showMessageDialog(this,
                         "Ocorreu um erro ao popular a lista com os elementos armazenados no Banco de Dados.",
@@ -406,15 +599,32 @@ public class Main extends javax.swing.JFrame {
         }
     }
     
-    private void preencherItems(DefaultListModel<String> modelo) {
+    private void preencherItems(DefaultTableModel modelo) {
         try {
             ResultSet rs = dao.getResultSet();
-            DefaultListModel<String> items = modelo;
-            items.removeAllElements();
+            DefaultTableModel items = modelo;
+            items.setRowCount(0);
             while(rs != null && rs.next()) {
-                items.addElement(rs.getInt(1) + " - " + rs.getString(2));
+                ResultSetMetaData rsmd = rs.getMetaData();
+                Vector v = new Vector();
+                for (int i = 1; i <= rsmd.getColumnCount(); i++) {
+                    if (rsmd.getColumnType(i) == Types.VARCHAR
+                            || rsmd.getColumnClassName(i).equalsIgnoreCase("java.lang.String")) {//para string
+                        v.addElement(rs.getString(i));
+                    } else if (rsmd.getColumnType(i) == Types.INTEGER) {//para inteiros
+                        if (rsmd.getColumnName(i).equalsIgnoreCase("item_id")) {
+                            v.addElement(new Long(rs.getLong(i)));
+                        }
+                    } else {
+                        if(rs.getBoolean(i) == true) {
+                            v.addElement("Feito");
+                        } else {
+                            v.addElement("Pendente");
+                        }
+                    }
+                }
+                items.addRow(v);
             }
-            jListItems.setModel(modelo);
         } catch(SQLException e) {
             JOptionPane.showMessageDialog(this,
                         "Ocorreu um erro ao popular a lista com os elementos armazenados no Banco de Dados.",
@@ -465,14 +675,15 @@ public class Main extends javax.swing.JFrame {
     private javax.swing.JButton jButtonEditarLista;
     private javax.swing.JButton jButtonExcluirItem;
     private javax.swing.JButton jButtonExcluirLista;
+    private javax.swing.JButton jButtonStatusItem;
     private javax.swing.JLabel jLabelDescItem;
     private javax.swing.JLabel jLabelItems;
     private javax.swing.JLabel jLabelListas;
     private javax.swing.JLabel jLabelNomeLista;
-    private javax.swing.JList<String> jListItems;
-    private javax.swing.JList<String> jListListas;
     private javax.swing.JScrollPane jScrollPaneItems;
     private javax.swing.JScrollPane jScrollPaneListas;
+    private javax.swing.JTable jTableItems;
+    private javax.swing.JTable jTableListas;
     private javax.swing.JTextField jTextFieldItem;
     private javax.swing.JTextField jTextFieldLista;
     // End of variables declaration//GEN-END:variables
