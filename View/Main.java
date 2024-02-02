@@ -42,6 +42,8 @@ public class Main extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jPanelBackground = new javax.swing.JPanel();
+        jLabelHeader = new javax.swing.JLabel();
         jLabelListas = new javax.swing.JLabel();
         jLabelItems = new javax.swing.JLabel();
         jButtonCriarLista = new javax.swing.JButton();
@@ -62,84 +64,142 @@ public class Main extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("ToDo List");
-        setBackground(new java.awt.Color(102, 0, 153));
+        setBackground(new java.awt.Color(153, 255, 153));
+        setForeground(new java.awt.Color(153, 255, 153));
         setMinimumSize(new java.awt.Dimension(700, 500));
-        setPreferredSize(new java.awt.Dimension(700, 500));
+        setResizable(false);
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowOpened(java.awt.event.WindowEvent evt) {
                 formWindowOpened(evt);
             }
         });
 
-        jLabelListas.setText("Listas");
+        jPanelBackground.setBackground(new java.awt.Color(44, 26, 85));
+        jPanelBackground.setForeground(new java.awt.Color(44, 26, 85));
+        jPanelBackground.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        jPanelBackground.setPreferredSize(new java.awt.Dimension(700, 500));
+        jPanelBackground.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jLabelItems.setText("Items");
+        jLabelHeader.setFont(new java.awt.Font("Verdana", 1, 48)); // NOI18N
+        jLabelHeader.setForeground(new java.awt.Color(255, 112, 10));
+        jLabelHeader.setText("V360");
+        jPanelBackground.add(jLabelHeader, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 20, -1, -1));
 
+        jLabelListas.setFont(new java.awt.Font("Verdana", 1, 18)); // NOI18N
+        jLabelListas.setForeground(new java.awt.Color(242, 242, 242));
+        jLabelListas.setText("LISTAS");
+        jPanelBackground.add(jLabelListas, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 100, -1, -1));
+
+        jLabelItems.setFont(new java.awt.Font("Verdana", 1, 18)); // NOI18N
+        jLabelItems.setForeground(new java.awt.Color(242, 242, 242));
+        jLabelItems.setText("ITEMS");
+        jPanelBackground.add(jLabelItems, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 100, -1, -1));
+
+        jButtonCriarLista.setBackground(new java.awt.Color(255, 112, 10));
+        jButtonCriarLista.setFont(new java.awt.Font("Verdana", 1, 12)); // NOI18N
+        jButtonCriarLista.setForeground(new java.awt.Color(242, 242, 242));
         jButtonCriarLista.setText("Nova Lista");
         jButtonCriarLista.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButtonCriarListaActionPerformed(evt);
             }
         });
+        jPanelBackground.add(jButtonCriarLista, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 350, 135, -1));
 
+        jButtonEditarLista.setBackground(new java.awt.Color(255, 112, 10));
+        jButtonEditarLista.setFont(new java.awt.Font("Verdana", 1, 12)); // NOI18N
+        jButtonEditarLista.setForeground(new java.awt.Color(242, 242, 242));
         jButtonEditarLista.setText("Editar Nome");
         jButtonEditarLista.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButtonEditarListaActionPerformed(evt);
             }
         });
+        jPanelBackground.add(jButtonEditarLista, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 380, 135, -1));
 
+        jButtonExcluirLista.setBackground(new java.awt.Color(255, 112, 10));
+        jButtonExcluirLista.setFont(new java.awt.Font("Verdana", 1, 12)); // NOI18N
+        jButtonExcluirLista.setForeground(new java.awt.Color(242, 242, 242));
         jButtonExcluirLista.setText("Excluir Lista");
         jButtonExcluirLista.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButtonExcluirListaActionPerformed(evt);
             }
         });
+        jPanelBackground.add(jButtonExcluirLista, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 410, 135, -1));
 
+        jButtonCriarItem.setBackground(new java.awt.Color(255, 112, 10));
+        jButtonCriarItem.setFont(new java.awt.Font("Verdana", 1, 12)); // NOI18N
+        jButtonCriarItem.setForeground(new java.awt.Color(242, 242, 242));
         jButtonCriarItem.setText("Novo Item");
         jButtonCriarItem.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButtonCriarItemActionPerformed(evt);
             }
         });
+        jPanelBackground.add(jButtonCriarItem, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 350, 135, -1));
 
+        jButtonEditarItem.setBackground(new java.awt.Color(255, 112, 10));
+        jButtonEditarItem.setFont(new java.awt.Font("Verdana", 1, 12)); // NOI18N
+        jButtonEditarItem.setForeground(new java.awt.Color(242, 242, 242));
         jButtonEditarItem.setText("Editar Descrição");
         jButtonEditarItem.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButtonEditarItemActionPerformed(evt);
             }
         });
+        jPanelBackground.add(jButtonEditarItem, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 350, -1, -1));
 
+        jButtonExcluirItem.setBackground(new java.awt.Color(255, 112, 10));
+        jButtonExcluirItem.setFont(new java.awt.Font("Verdana", 1, 12)); // NOI18N
+        jButtonExcluirItem.setForeground(new java.awt.Color(242, 242, 242));
         jButtonExcluirItem.setText("Excluir Item");
         jButtonExcluirItem.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButtonExcluirItemActionPerformed(evt);
             }
         });
+        jPanelBackground.add(jButtonExcluirItem, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 380, 135, -1));
 
+        jButtonStatusItem.setBackground(new java.awt.Color(255, 112, 10));
+        jButtonStatusItem.setFont(new java.awt.Font("Verdana", 1, 12)); // NOI18N
+        jButtonStatusItem.setForeground(new java.awt.Color(242, 242, 242));
         jButtonStatusItem.setText("Alterar Status");
         jButtonStatusItem.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButtonStatusItemActionPerformed(evt);
             }
         });
+        jPanelBackground.add(jButtonStatusItem, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 380, 135, -1));
 
         jTextFieldLista.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
                 jTextFieldListaKeyReleased(evt);
             }
         });
+        jPanelBackground.add(jTextFieldLista, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 310, 220, -1));
 
         jTextFieldItem.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
                 jTextFieldItemKeyReleased(evt);
             }
         });
+        jPanelBackground.add(jTextFieldItem, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 310, 300, -1));
 
+        jLabelNomeLista.setFont(new java.awt.Font("Verdana", 0, 12)); // NOI18N
+        jLabelNomeLista.setForeground(new java.awt.Color(242, 242, 242));
         jLabelNomeLista.setText("Nome da Lista");
+        jPanelBackground.add(jLabelNomeLista, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 290, -1, -1));
 
+        jLabelDescItem.setFont(new java.awt.Font("Verdana", 0, 12)); // NOI18N
+        jLabelDescItem.setForeground(new java.awt.Color(242, 242, 242));
         jLabelDescItem.setText("Descrição do Item");
+        jPanelBackground.add(jLabelDescItem, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 290, -1, -1));
 
+        jScrollPaneListas.setBorder(null);
+        jScrollPaneListas.setFont(new java.awt.Font("Verdana", 1, 12)); // NOI18N
+
+        jTableListas.setFont(new java.awt.Font("Verdana", 0, 12)); // NOI18N
         jTableListas.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null},
@@ -179,12 +239,15 @@ public class Main extends javax.swing.JFrame {
             jTableListas.getColumnModel().getColumn(1).setMaxWidth(180);
         }
 
+        jPanelBackground.add(jScrollPaneListas, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 130, 220, 154));
+
+        jScrollPaneItems.setBorder(null);
+        jScrollPaneItems.setFont(new java.awt.Font("Verdana", 1, 12)); // NOI18N
+
+        jTableItems.setFont(new java.awt.Font("Verdana", 0, 12)); // NOI18N
         jTableItems.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null}
+
             },
             new String [] {
                 "ID", "Descrição", "Status"
@@ -207,89 +270,28 @@ public class Main extends javax.swing.JFrame {
         });
         jScrollPaneItems.setViewportView(jTableItems);
         if (jTableItems.getColumnModel().getColumnCount() > 0) {
+            jTableItems.getColumnModel().getColumn(0).setMinWidth(40);
             jTableItems.getColumnModel().getColumn(0).setPreferredWidth(40);
+            jTableItems.getColumnModel().getColumn(0).setMaxWidth(40);
             jTableItems.getColumnModel().getColumn(1).setMinWidth(180);
             jTableItems.getColumnModel().getColumn(1).setPreferredWidth(180);
             jTableItems.getColumnModel().getColumn(1).setMaxWidth(180);
-            jTableItems.getColumnModel().getColumn(2).setMinWidth(60);
-            jTableItems.getColumnModel().getColumn(2).setPreferredWidth(60);
-            jTableItems.getColumnModel().getColumn(2).setMaxWidth(60);
+            jTableItems.getColumnModel().getColumn(2).setMinWidth(80);
+            jTableItems.getColumnModel().getColumn(2).setPreferredWidth(80);
+            jTableItems.getColumnModel().getColumn(2).setMaxWidth(80);
         }
+
+        jPanelBackground.add(jScrollPaneItems, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 130, 300, 154));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(148, 148, 148)
-                        .addComponent(jLabelListas))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(65, 65, 65)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jLabelNomeLista)
-                            .addComponent(jTextFieldLista, javax.swing.GroupLayout.DEFAULT_SIZE, 220, Short.MAX_VALUE)
-                            .addComponent(jScrollPaneListas, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(122, 122, 122)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jButtonCriarLista, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jButtonExcluirLista, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jButtonEditarLista, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addGap(92, 92, 92)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jButtonCriarItem, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                        .addGroup(layout.createSequentialGroup()
-                            .addComponent(jButtonExcluirItem, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jButtonStatusItem, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addComponent(jButtonEditarItem, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabelDescItem)
-                            .addComponent(jTextFieldItem, javax.swing.GroupLayout.PREFERRED_SIZE, 280, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addGroup(layout.createSequentialGroup()
-                                    .addGap(116, 116, 116)
-                                    .addComponent(jLabelItems)
-                                    .addGap(135, 135, 135))
-                                .addComponent(jScrollPaneItems, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 280, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                .addContainerGap(64, Short.MAX_VALUE))
+            .addComponent(jPanelBackground, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(146, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabelListas)
-                    .addComponent(jLabelItems))
-                .addGap(2, 2, 2)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPaneListas, javax.swing.GroupLayout.PREFERRED_SIZE, 154, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jScrollPaneItems, javax.swing.GroupLayout.PREFERRED_SIZE, 154, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabelDescItem)
-                    .addComponent(jLabelNomeLista))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextFieldLista, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextFieldItem, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jButtonCriarItem, javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jButtonCriarLista)
-                        .addComponent(jButtonEditarItem)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButtonEditarLista)
-                    .addComponent(jButtonExcluirItem)
-                    .addComponent(jButtonStatusItem))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButtonExcluirLista)
-                .addGap(41, 41, 41))
+            .addComponent(jPanelBackground, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         pack();
@@ -677,9 +679,11 @@ public class Main extends javax.swing.JFrame {
     private javax.swing.JButton jButtonExcluirLista;
     private javax.swing.JButton jButtonStatusItem;
     private javax.swing.JLabel jLabelDescItem;
+    private javax.swing.JLabel jLabelHeader;
     private javax.swing.JLabel jLabelItems;
     private javax.swing.JLabel jLabelListas;
     private javax.swing.JLabel jLabelNomeLista;
+    private javax.swing.JPanel jPanelBackground;
     private javax.swing.JScrollPane jScrollPaneItems;
     private javax.swing.JScrollPane jScrollPaneListas;
     private javax.swing.JTable jTableItems;
