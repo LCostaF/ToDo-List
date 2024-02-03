@@ -297,6 +297,7 @@ public class Main extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    // Criar uma nova lista
     private void jButtonCriarListaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCriarListaActionPerformed
         DefaultTableModel listas = (DefaultTableModel)jTableListas.getModel();
         DefaultTableModel items = (DefaultTableModel)jTableItems.getModel();
@@ -332,6 +333,7 @@ public class Main extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jButtonCriarListaActionPerformed
 
+    // Editar uma lista
     private void jButtonEditarListaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEditarListaActionPerformed
         DefaultTableModel listas = (DefaultTableModel)jTableListas.getModel();
         DefaultTableModel items = (DefaultTableModel)jTableItems.getModel();
@@ -367,6 +369,7 @@ public class Main extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jButtonEditarListaActionPerformed
 
+    // Excluir uma lista
     private void jButtonExcluirListaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonExcluirListaActionPerformed
         DefaultTableModel listas = (DefaultTableModel)jTableListas.getModel();
         DefaultTableModel items = (DefaultTableModel)jTableItems.getModel();
@@ -396,6 +399,7 @@ public class Main extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jButtonExcluirListaActionPerformed
 
+    // Criar um novo item
     private void jButtonCriarItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCriarItemActionPerformed
         DefaultTableModel items = (DefaultTableModel)jTableItems.getModel();
         try {
@@ -439,6 +443,7 @@ public class Main extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jButtonCriarItemActionPerformed
 
+    // Editar a descrição de um item
     private void jButtonEditarItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEditarItemActionPerformed
         DefaultTableModel items = (DefaultTableModel)jTableItems.getModel();
         if(jTableItems.getSelectionModel().isSelectionEmpty()) {
@@ -472,6 +477,7 @@ public class Main extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jButtonEditarItemActionPerformed
 
+    // Excluir um item
     private void jButtonExcluirItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonExcluirItemActionPerformed
         DefaultTableModel items = (DefaultTableModel)jTableItems.getModel();
         if(jTableItems.getSelectionModel().isSelectionEmpty()) {
@@ -499,6 +505,7 @@ public class Main extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jButtonExcluirItemActionPerformed
 
+    // Alterar o status de um item
     private void jButtonStatusItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonStatusItemActionPerformed
         DefaultTableModel items = (DefaultTableModel)jTableItems.getModel();
         if(jTableItems.getSelectionModel().isSelectionEmpty()) {
@@ -536,6 +543,7 @@ public class Main extends javax.swing.JFrame {
         preencherListas(listas);
     }//GEN-LAST:event_formWindowOpened
 
+    // Atualiza tabela de listas conforme digitação
     private void jTextFieldListaKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextFieldListaKeyReleased
         if(jTableListas.getSelectionModel().isSelectionEmpty() && dao.consultarEspecificoLista(new Lista(jTextFieldLista.getText()))) {
             DefaultTableModel listas = (DefaultTableModel)jTableListas.getModel();
@@ -543,6 +551,7 @@ public class Main extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jTextFieldListaKeyReleased
 
+    // Atualiza tabela de items conforme lista selecionada e digitação
     private void jTextFieldItemKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextFieldItemKeyReleased
         if(!jTableListas.getSelectionModel().isSelectionEmpty() && jTableItems.getSelectionModel().isSelectionEmpty() 
                 && dao.consultarEspecificoItems(jTextFieldItem.getText(), 
@@ -552,6 +561,7 @@ public class Main extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jTextFieldItemKeyReleased
 
+    // Preenche tabela de items conforme lista selecionada
     private void jTableListasMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableListasMouseReleased
         if(dao.consultarEspecificoItems(jTextFieldItem.getText(), 
                         Integer.parseInt(jTableListas.getValueAt(jTableListas.getSelectedRow(), 0).toString()))) {
@@ -570,11 +580,13 @@ public class Main extends javax.swing.JFrame {
         jTextFieldItem.setText("");
     }
     
+    // Método para buscar todos os items de uma lista
     private void buscaItemsPorLista() {
         dao.consultarEspecificoItems(jTextFieldItem.getText(), 
                         Integer.parseInt(jTableListas.getValueAt(jTableListas.getSelectedRow(), 0).toString()));
     }
-    
+
+    // Métodos para preencher as tabelas
     private void preencherListas(DefaultTableModel modelo) {
         try {
             ResultSet rs = dao.getResultSet();

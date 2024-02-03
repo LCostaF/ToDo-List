@@ -86,67 +86,8 @@ public class JDBCUtil {
     public static Connection getConnection() throws SQLException {
         return DriverManager.getConnection(url, username, password);
     }
-
-    public static boolean MovProximo(ResultSet rsdados) {
-        try {
-            if (rsdados != null) {
-                if (!rsdados.isLast()) {
-                    rsdados.next();
-                    return true;
-                }               
-            }
-        } catch (SQLException erro) {
-            System.out.println(erro);
-            return false;
-        }
-        return false;
-    }
-
-    public static boolean MovAnterior(ResultSet rsdados) {
-        try {
-            if (rsdados != null) {
-                if (!rsdados.isFirst()) {
-                    rsdados.previous();
-                    return true;
-                }
-            }
-        } catch (SQLException erro) {
-            System.out.println(erro);
-            return false;
-        }
-        return false;
-    }
-
-    public static boolean MovUltimo(ResultSet rsdados) {
-        try {
-            if (rsdados != null) {
-                if (!rsdados.isLast()) {
-                    rsdados.last();
-                    return true;
-                }
-            }
-        } catch (SQLException erro) {
-            System.out.println(erro);
-            return false;
-        }
-        return false;
-    }
-
-    public static boolean MovPrimeiro(ResultSet rsdados) {
-        try {
-            if (rsdados != null) {
-                if (!rsdados.isFirst()) {
-                    rsdados.first();
-                    return true;
-                }
-            }
-        } catch (SQLException erro) {
-            System.out.println(erro);
-            return false;
-        }
-        return false;
-    }
     
+    // Métodos getters
     public static String getConsultaTodos() {
         return consultaTodos;
     }
